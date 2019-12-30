@@ -17,9 +17,9 @@ def login():
     c.execute('select * from user')
     row = c.fetchone()
     select_net = row[2]
-    print(select_net)
     print(str(e1.get()))
     print(str(e2.get()))
+    print(values[select_net])
     print('正在登陆！')
     conn.commit()
 
@@ -29,34 +29,27 @@ def login():
     xuehao = driver.find_element_by_xpath(
         '//*[@id="edit_body"]/div[2]/div/form/input[2]')
     xuehao.send_keys(e1.get())
-    time.sleep(1)
     mima = driver.find_element_by_xpath(
         '//*[@id="edit_body"]/div[2]/div/form/input[3]')
-    time.sleep(1)
     mima.send_keys(e2.get())
     if select_net == 0:
         yuyingshang = driver.find_element_by_xpath(
             '//*[@id="edit_body"]/div[2]/div/select/option[2]')
-        time.sleep(1)
         yuyingshang.click()
     elif select_net == 1:
         yuyingshang = driver.find_element_by_xpath(
             '//*[@id="edit_body"]/div[2]/div/select/option[3]')
-        time.sleep(1)
         yuyingshang.click()
     elif select_net == 2:
         yuyingshang = driver.find_element_by_xpath(
             '//*[@id="edit_body"]/div[2]/div/select/option[4]')
-        time.sleep(1)
         yuyingshang.click()
     elif select_net == 3:
         yuyingshang = driver.find_element_by_xpath(
             '//*[@id="edit_body"]/div[2]/div/select/option[5]')
-        time.sleep(1)
         yuyingshang.click()
     denglu = driver.find_element_by_xpath(
         '//*[@id="edit_body"]/div[2]/div/form/input[1]')
-    time.sleep(1)
     denglu.click()
 
 
@@ -123,6 +116,14 @@ Button(root, text="注销", command=logout).grid(row=3,
                                              sticky="e",
                                              padx=10,
                                              pady=5)
+
+#居中显示
+width = 250
+height = 150
+screenwidth = root.winfo_screenwidth()
+screenheight = root.winfo_screenheight()
+alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth-width)/2, (screenheight-height)/2)
+root.geometry(alignstr)
 
 mainloop()
 c.close()
