@@ -1,0 +1,11 @@
+{
+    "python.formatting.provider": "yapf",
+    "sqltools.connections": [
+        {
+            "database": "${workspaceFolder}\\cumt_net.db",
+            "dialect": "SQLite",
+            "name": "cumt_net"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
