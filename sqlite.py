@@ -3,6 +3,11 @@ import sqlite3
 #数据库
 conn = sqlite3.connect('cumt_net.db')
 c = conn.cursor()
+# c.execute('''create table user(
+#     id,
+#     pass,
+#     net
+# )''')
 # c.execute('insert into user values(?,?)',('05171723','200711'))
 # c.execute('select * from user')
 # c.execute('delete from user')
