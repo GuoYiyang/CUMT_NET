@@ -6,6 +6,7 @@ from tkinter import ttk
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
+#可选择代理
 # options = webdriver.ChromeOptions()
 # options.add_argument(
 #     'user-agent="Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19"'
@@ -67,7 +68,7 @@ def logout():
         '/html/body/div[2]/div/div[2]/form/input[1]')
     queren.click()
 
-
+#选择框事件
 def handler(event):
     current = combobox.current()
     select_net = current
@@ -83,6 +84,7 @@ Label(root, text="账号:").grid(row=0, column=0, padx=10, pady=5)
 Label(root, text="密码:").grid(row=1, column=0, padx=10, pady=5)
 Label(root, text="运营商:").grid(row=2, column=0, padx=10, pady=5)
 #输入
+#读取数据库信息
 conn = sqlite3.connect('cumt_net.db')
 c = conn.cursor()
 c.execute('select * from user')
@@ -95,6 +97,7 @@ else:
     default_xuehao = StringVar(value="")
     default_mima = StringVar(value="")
     select_net = 0
+#输入框
 e1 = Entry(root, textvariable=default_xuehao)
 e2 = Entry(root, textvariable=default_mima)
 e1.grid(row=0, column=1, padx=10, pady=5)
