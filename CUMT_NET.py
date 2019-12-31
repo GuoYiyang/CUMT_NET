@@ -1,19 +1,24 @@
 import sqlite3
+import time
 from tkinter import *
 from tkinter import ttk
+
 from selenium import webdriver
-import time
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-options = webdriver.ChromeOptions()
-options.add_argument(
-    'user-agent="Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19"'
-)
+# options = webdriver.ChromeOptions()
+# options.add_argument(
+#     'user-agent="Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19"'
+# )
 
+# 修改页面加载策略,get直接返回，不再等待界面加载完成
+desired_capabilities = DesiredCapabilities.CHROME
+desired_capabilities["pageLoadStrategy"] = "none"
 
 
 #登录
 def login():
-    c.execute('update user set id=?, pass=?',(str(e1.get()),str(e2.get())))
+    c.execute('update user set id=?, pass=?', (str(e1.get()), str(e2.get())))
     c.execute('select * from user')
     row = c.fetchone()
     select_net = row[2]
@@ -22,9 +27,7 @@ def login():
     print(values[select_net])
     print('正在登陆！')
     conn.commit()
-
-
-    driver = webdriver.Chrome(chrome_options=options)
+    driver = webdriver.Chrome('chromedriver.exe')
     driver.get(url='http://10.2.5.251/')
     xuehao = driver.find_element_by_xpath(
         '//*[@id="edit_body"]/div[2]/div/form/input[2]')
@@ -55,7 +58,7 @@ def login():
 
 #注销
 def logout():
-    driver = webdriver.Chrome(chrome_options=options)
+    driver = webdriver.Chrome('chromedriver.exe')
     driver.get(url='http://10.2.5.251/')
     zhuxiao = driver.find_element_by_xpath(
         '//*[@id="edit_body"]/div[2]/div/form/input')
@@ -68,9 +71,8 @@ def logout():
 def handler(event):
     current = combobox.current()
     select_net = current
-    c.execute('update user set net = ?',(select_net,))
+    c.execute('update user set net = ?', (select_net, ))
     conn.commit()
-    
 
 
 #图形界面
@@ -85,7 +87,7 @@ conn = sqlite3.connect('cumt_net.db')
 c = conn.cursor()
 c.execute('select * from user')
 row = c.fetchone()
-if row :
+if row:
     default_xuehao = StringVar(value=row[0])
     default_mima = StringVar(value=row[1])
     select_net = row[2]
@@ -104,7 +106,6 @@ combobox.current(int(select_net))
 combobox.bind('<<ComboboxSelected>>', handler)
 combobox.grid(row=2, column=1, padx=10, pady=5)
 
-
 #按钮
 Button(root, text="登录", command=login).grid(row=3,
                                             column=0,
@@ -122,7 +123,8 @@ width = 250
 height = 150
 screenwidth = root.winfo_screenwidth()
 screenheight = root.winfo_screenheight()
-alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth-width)/2, (screenheight-height)/2)
+alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2,
+                            (screenheight - height) / 2)
 root.geometry(alignstr)
 
 mainloop()
