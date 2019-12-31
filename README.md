@@ -12,5 +12,5 @@ https://www.cnblogs.com/573734817pc/p/11177010.html
 
 ## 使用截图：
 
-https://github.com/GuoYiyang/CUMT_NET/blob/master/images/cumt_net_image.png
+![ ](https://github.com/GuoYiyang/CUMT_NET/blob/master/images/cumt_net_image.png)
 
