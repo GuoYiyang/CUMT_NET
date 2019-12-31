@@ -7,10 +7,11 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 #可选择代理
-# options = webdriver.ChromeOptions()
-# options.add_argument(
-#     'user-agent="Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19"'
-# )
+options = webdriver.ChromeOptions()
+options.add_argument(
+    'user-agent="Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19"'
+    '--user-data-dir=C:/Users/Administrator/AppData/Local/Google/Chrome/User Data/Default'
+)
 
 # 修改页面加载策略,get直接返回，不再等待界面加载完成
 desired_capabilities = DesiredCapabilities.CHROME
@@ -23,12 +24,12 @@ def login():
     c.execute('select * from user')
     row = c.fetchone()
     select_net = row[2]
-    print(str(e1.get()))
-    print(str(e2.get()))
+    print('账号:',str(e1.get()))
+    print('密码:',str(e2.get()))
     print(values[select_net])
-    print('正在登陆！')
+    print('正在登陆...')
     conn.commit()
-    driver = webdriver.Chrome('chromedriver.exe')
+    driver = webdriver.Chrome('chromedriver.exe', chrome_options=options)
     driver.get(url='http://10.2.5.251/')
     xuehao = driver.find_element_by_xpath(
         '//*[@id="edit_body"]/div[2]/div/form/input[2]')
@@ -59,7 +60,8 @@ def login():
 
 #注销
 def logout():
-    driver = webdriver.Chrome('chromedriver.exe')
+    print('正在注销...')
+    driver = webdriver.Chrome('chromedriver.exe', chrome_options=options)
     driver.get(url='http://10.2.5.251/')
     zhuxiao = driver.find_element_by_xpath(
         '//*[@id="edit_body"]/div[2]/div/form/input')
@@ -67,6 +69,7 @@ def logout():
     queren = driver.find_element_by_xpath(
         '/html/body/div[2]/div/div[2]/form/input[1]')
     queren.click()
+
 
 #选择框事件
 def handler(event):
